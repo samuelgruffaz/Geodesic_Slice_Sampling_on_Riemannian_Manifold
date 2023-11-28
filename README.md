@@ -1,4 +1,4 @@
-# Slice Sampling on Riemannian manifold.
+# Geodesic Slice Sampling on Riemannian manifold.
 
 This repository hosts the code for this paper "Slice Sampling on Riemannian manifold".
 
