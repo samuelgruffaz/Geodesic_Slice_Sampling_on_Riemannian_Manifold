@@ -50,8 +50,8 @@ class Hybrid_Monte_Carlo_Grassman():
         for i in range(self.T):
             v=self.proj_tan_grassman(X_new,v+self.h*self.grad_log_prob(X_new)/2)#gradient step
             Input=self.to_input(X_new,v)#wrapping for the geodesics
-            X_new=self.walk_geodesic(Input,self.h)# geodesics computations
-            v=self.proj_tan_grassman(X_new,v+self.h*self.grad_log_prob(X_new)/2)#projection of the velocity 
+            X_new, V_new=self.walk_geodesic_flow(Input,self.h)# geodesics computations
+            v=self.proj_tan_grassman(X_new,V_new+self.h*self.grad_log_prob(X_new)/2)#projection of the velocity 
         X_new=self.proj_V(X_new)
         return X_new,v
 
@@ -131,7 +131,7 @@ class Hybrid_Monte_Carlo_Grassman():
         
         return (X_V,U,sigma,VT)
 
-    def walk_geodesic(self,Input,t,reproject=True):
+    def walk_geodesic_flow(self,Input,t,reproject=True):
         """
         Input=(X_V,U,sigma,VT), t the time,
          with U,sigma,VT the svd of a point on the tangent space
@@ -143,16 +143,18 @@ class Hybrid_Monte_Carlo_Grassman():
 
 
         X_V,U,sigma,VT=Input
-        
-        rec_sigma=np.concatenate([np.diag(np.cos(sigma*t)),np.diag(np.sin(sigma*t))], axis=0)
-        Y=(np.concatenate([X_V,U], axis=1)@rec_sigma).dot(VT)
+
+        rec_sigma_pos=np.concatenate([np.diag(np.cos(sigma*t)),np.diag(np.sin(sigma*t))], axis=0)
+        rec_sigma_velo=np.concatenate([np.diag(-np.sin(sigma*t)*sigma),np.diag(np.cos(sigma*t)*sigma)], axis=0)
+        Y=(np.concatenate([X_V,U], axis=1)@rec_sigma_pos).dot(VT)
+        Velo=(np.concatenate([X_V,U], axis=1)@rec_sigma_velo).dot(VT)# toreproject
 
         if reproject:# reprojection step to avoid accumulation of numerical errors
             Reprojection= self.proj_V(Y)
         else:
             Reprojection=Y
 
-        return Reprojection
+        return Reprojection,Velo
     def run_kernel(self,X_0,n_iter):
         """
         GeoMALA sampling beginning from X_0

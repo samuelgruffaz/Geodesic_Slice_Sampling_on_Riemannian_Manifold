@@ -29,7 +29,7 @@ https://www.csc.kth.se/cvap/actions/
 
 ## Reproducing the experiments
 
-The experiments are separated in different folder each one containing its own code (userfriendly to push on a cloud). 
+The experiments are separated into different folders, each one containing its own code (user-friendly to push on a cloud). 
 
 The experiments are the following :
 
@@ -49,17 +49,17 @@ The experiments are the following :
 
 - "Clustering_KTH_dataset" contains the codes for clustering video action data using EM algorithm and posterior sampling. (Section 3.4)
 
-Each experiment has its file "exploit_*name_of_the_experiments*.py" to see the results related to the experiments done in the paper, except for Networks_analysis_missing_link_imputation, Networks_analysis_real_data_estimation and Bayesian_clustering_on_the_KTH_dataset.
+Each experiment has its file "exploit_*name_of_the_experiments*.py" to see the results related to the experiments done in the paper, except for Networks_analysis_missing_link_imputation, Networks_analysis_real_data_estimation, and Bayesian_clustering_on_the_KTH_dataset.
 
- For missing_link_imputation the results should be print by running "imputation.py".
-  For real_data_estimation the file is inside the folder and it is needed to have the real data to lunch it and to fill the path where the data are saved.
-For the clustering, it is the same, you need to download the data and to preprocess it with "Pre_processing.py" in the clustering folder, once it is fone you can directly see our results with "see_results_bayesian.py".
+ For missing_link_imputation, the results should be printed by running "imputation.py".
+  For real_data_estimation, the file is inside the folder, and it is needed to have the real data to run it and to fill the path where the data are saved.
+For the clustering, it is the same. You need to download the data and to preprocess it with "Pre_processing.py" in the clustering folder. Once it is done you can directly see our results with "see_results_bayesian.py".
 
 ## The codes
 
-The implementation we provide can be used on other density to sample. The python related file are "Hybrid_Monte_Carlo.py" for GeoMALA, "Sampler_class.py" and "Sampler_grassman.py" for GSS and RMH on the Stiefel and the Grassman manifold.
-The codes related to the network analysis is taken from [1] and was changed to add samplers related to GSS.
-The codes related to clustering is quite specific to the used example, but can be readapted for others applications.
+The implementation we provide can be used on other densities to sample. The python-related files are "Hybrid_Monte_Carlo.py" for GeoMALA, "Sampler_class.py" and "Sampler_grassman.py" for GSS and RMH on the Stiefel and the Grassman manifold.
+The code related to the network analysis is taken from [1] and was changed to add samplers related to GSS.
+The code related to clustering is quite specific to the used example but can be readapted for other applications.
 
 
 
